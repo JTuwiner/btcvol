@@ -1,0 +1,4 @@
+cron:
+- description: update data
+  url: /update
+  schedule: every 4 hours

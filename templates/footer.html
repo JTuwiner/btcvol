@@ -1,0 +1,34 @@
+	<footer id="footer" class="container text-center">
+		<p>Lovingly made by</p>
+		<p><a href="https://twitter.com/elidourado" class="twitter-follow-button" data-show-count="false" data-size="large">@elidourado</a></p>
+	</footer>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        var data = google.visualization.arrayToDataTable([
+          ['Date', 'Volatility'],
+          {{range .Data}}[{{.Date}},{{.Volatility}}],
+		  {{end}}]);
+
+        var options = {
+          height: 500,
+          seriesType: "line",
+		  fontName: "Open Sans",
+		  legend: {position: "none"},
+		  title: "BITCOIN VOLATILITY",
+		  titleTextStyle: {fontName: "Lato", fontSize: 20},
+		  vAxis: {title: "Volatility (%)\nRolling 30-day Window", titleTextStyle: {italic: false}},
+		  hAxis: {title: "Date", maxTextLines: "10", titleTextStyle: {italic: false}},
+		  explorer: { axis: "horizontal", actions: ["dragToZoom", "rightClickToReset"] }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+queue:
+- name: default
+  rate: 5/s
+  retry_parameters:
+    task_age_limit: 4h
+    min_backoff_seconds: 60
+    max_backoff_seconds: 3600
+    max_doublings: 2

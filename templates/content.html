@@ -1,0 +1,31 @@
+{{ template "header.html" . }}
+	<section id="main">
+		<h2>Bitcoin Volatility Time Series</h2>
+		<div id="chart_div"><p class="loading">Loading chart... (uses javascript)</p></div>
+		
+		<h2>Frequently Asked Questions</h2>
+		<p class="q">What is <em>btcvol.info</em>?</p>
+		<p class="a">This site tracks the volatility of Bitcoin prices in US dollars.</p>
+		<p class="q">What is volatility?</p>
+		<p class="a">Volatility is a measure of how much the price of a financial asset varies over time.</p>
+		<p class="q">Why is volatility important?</p>
+		<p class="a">Volatility means that an asset is risky to hold—on any given day, its value may go up or down substantially. The more volatile an asset, the more people will want to limit their exposure to it, either by simply not holding it or by hedging. Volatility also increases the <em>cost</em> of hedging, which is a major contributor to the price of merchant services. If Bitcoin volatility decreases, the cost of converting into and out of Bitcoin will decrease as well.</p>
+		<p class="q">What definition of volatility does <em>btcvol.info</em> use?</p>
+		<p class="a">The standard deviation of daily returns for the preceding 30-day window. This is a measure of <a href="https://en.wikipedia.org/wiki/Volatility_(finance)#Volatility_terminology"><em>historical</em> volatility</a> based on past Bitcoin prices. When the Bitcoin options market matures, it will be possible to calculate Bitcoin's <a href="https://en.wikipedia.org/wiki/Implied_volatility"><em>implied</em> volatility</a>, which is in many ways a better measure.</p>
+		<p class="q">How volatile is Bitcoin relative to gold and other currencies?</p>
+		<p class="a">For comparison, the volatility of gold averages around 1.2%, while other major currencies average between 0.5% and 1.0%.</p>
+		<p class="q">What is the pricing source?</p>
+		<p class="a"><em>btcvol.info</em> is powered by <a href="http://www.coindesk.com/price/">CoinDesk</a>.</p>
+		<p class="q">Is there an API?</p>
+		<p class="a">Yes, there is a rudimentary one. The latest volatility estimate is available as JSON at <code><a href="/latest">/latest</a></code>. The full historical volatility series is at <code><a href="/all">/all</a></code>. A CSV file with all data including volatility, prices, and daily returns can be downloaded at <code><a href="/csv">/csv</a></code>. The JSON files display volatility as percentages (as does this page), while the CSV file contains raw values.</p>
+		
+		
+		<h2>Donate</h2>
+		<p>Donations in Bitcoin are appreciated.</p>
+		<div id="donate">
+		<a href="bitcoin:1AtGSCEwyZaVKKJFv5E5NB8SA7RrmxsWTp"><img src="/img/address.png"></a><br />
+		<code>1AtGSCEwyZaVKKJFv5E5NB8SA7RrmxsWTp</code>
+		</div>
+		
+	</section>
+{{ template "footer.html" . }}

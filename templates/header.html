@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>({{printf "%1.2f" .Latest }}%) The Bitcoin Volatility Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <!-- Bootstrap -->
+	<link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.0/normalize.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato:100|Open+Sans:700italic,400italic,400,700' rel='stylesheet' type='text/css'>
+	<style>
+	body {
+		font-family: 'Open Sans', sans-serif;
+	}
+	header {
+		text-align: center;
+/*		background-color: blue;*/
+		padding: 50px;
+	}
+	h1 {
+		font-size: 3rem;
+		font-family: 'Lato', sans-serif;
+		font-weight: 100;
+		text-transform: uppercase;
+	}
+	h2 {
+		font-size: 2rem;
+		font-family: 'Lato', sans-serif;
+		font-weight: 100;
+		text-transform: uppercase;
+	}
+	div#latest {
+		text-align: center;
+		padding-top:150px;
+		padding-bottom:150px;
+	}
+	section#main {
+		margin:0 auto;
+		max-width: 800px;
+	}
+	span.stat {
+		font-size: 6rem;
+		font-family: 'Lato', sans-serif;
+		font-weight: 100;
+	}
+	p.loading {
+		text-align: center;
+	}
+	p.q {
+		font-weight: bold;
+	}
+	p.a {
+/*		color: gray;*/
+	}
+	div#donate {
+		text-align: center;
+	}
+	footer {
+		padding-top: 50px;
+		text-align: center;
+	}
+	hr {
+		clear:both;
+	}
+	</style>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-7700727-7', 'btcvol.info');
+	  ga('send', 'pageview');
+
+	</script>
+  </head>
+  <body>
+	  <header>
+  		<h1>The Bitcoin Volatility Index</h1>
+		<div id="latest">
+			<p>Latest Estimate<br />
+			<span class="stat">{{printf "%1.2f" .Latest }}%</span></p>
+		</div>
+	  </header>
