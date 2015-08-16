@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>({{printf "%1.2f" .Latest }}%) The Bitcoin Volatility Index</title>
+    <title>({{printf "%1.2f" .Latest30 }}%) The Bitcoin Volatility Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
     <!-- Bootstrap -->
@@ -78,7 +78,11 @@
 	  <header>
   		<h1>The Bitcoin Volatility Index</h1>
 		<div id="latest">
-			<p>Latest Estimate<br />
-			<span class="stat">{{printf "%1.2f" .Latest }}%</span></p>
+      <p>Latest 30-Day Estimate<br />
+      <span class="stat">{{printf "%1.2f" .Latest30 }}%</span>
+      </p>
+      <p>Latest 60-Day Estimate<br />
+      <span class="stat">{{printf "%1.2f" .Latest60 }}%</span>
+      </p>
 		</div>
 	  </header>
