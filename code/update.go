@@ -19,7 +19,7 @@ type CoinDeskResponse struct {
 type DataPoint struct {
 	Date                    string
 	Price, Logprice, Return float64 `json:"-" datastore:",noindex"`
-	Volatility30            float64 `datastore:",noindex"`
+	Volatility              float64 `datastore:",noindex"`
 	Volatility60            float64 `datastore:",noindex"`
 }
 
@@ -65,7 +65,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		for _, point := range subset {
 			returns = append(returns, point.Return)
 		}
-		data[j].Volatility30 = stats.StatsSampleStandardDeviation(returns) * 100.0
+		data[j].Volatility = stats.StatsSampleStandardDeviation(returns) * 100.0
 		j += 1
 	}
 	k := 59
