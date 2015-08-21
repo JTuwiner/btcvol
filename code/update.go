@@ -20,6 +20,7 @@ type DataPoint struct {
 	Date                    string
 	Price, Logprice, Return float64 `json:"-" datastore:",noindex"`
 	Volatility              float64 `datastore:",noindex"`
+	Volatility60            float64 `datastore:",noindex"`
 }
 
 type DataSet []DataPoint
@@ -66,6 +67,16 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		data[j].Volatility = stats.StatsSampleStandardDeviation(returns) * 100.0
 		j += 1
+	}
+	k := 59
+	for k < len(data) {
+		subset := data[k-59 : k]
+		var returns []float64
+		for _, point := range subset {
+			returns = append(returns, point.Return)
+		}
+		data[k].Volatility60 = stats.StatsSampleStandardDeviation(returns) * 100.0
+		k += 1
 	}
 
 	d := StoredDataSet{

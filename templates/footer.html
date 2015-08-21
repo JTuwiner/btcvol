@@ -9,20 +9,20 @@
 
       function drawVisualization() {
         var data = google.visualization.arrayToDataTable([
-          ['Date', 'Volatility'],
-          {{range .Data}}[{{.Date}},{{.Volatility}}],
+          ['Date', '30-Day Volatility', '60-Day Volatility'],
+          {{range .Data}}[{{.Date}},{{.Volatility}},{{.Volatility60}}],
 		  {{end}}]);
 
         var options = {
           height: 500,
           seriesType: "line",
-		  fontName: "Open Sans",
-		  legend: {position: "none"},
-		  title: "BITCOIN VOLATILITY",
-		  titleTextStyle: {fontName: "Lato", fontSize: 20},
-		  vAxis: {title: "Volatility (%)\nRolling 30-day Window", titleTextStyle: {italic: false}},
-		  hAxis: {title: "Date", maxTextLines: "10", titleTextStyle: {italic: false}},
-		  explorer: { axis: "horizontal", actions: ["dragToZoom", "rightClickToReset"] }
+          fontName: "Open Sans",
+          legend: {position: "right"},
+          title: "BITCOIN VOLATILITY",
+          titleTextStyle: {fontName: "Lato", fontSize: 20},
+          vAxis: {title: "Volatility (%)\nRolling n-day Window", titleTextStyle: {italic: false}},
+          hAxis: {title: "Date", maxTextLines: "10", titleTextStyle: {italic: false}},
+          explorer: { axis: "horizontal", actions: ["dragToZoom", "rightClickToReset"] }
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));

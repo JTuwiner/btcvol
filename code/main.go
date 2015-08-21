@@ -8,8 +8,9 @@ import (
 )
 
 type RenderData struct {
-	Latest float64
-	Data   DataSet
+	Latest30 float64
+	Latest60 float64
+	Data     DataSet
 }
 
 func init() {
@@ -38,7 +39,8 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var data RenderData
 	data.Data = d.Data[29:]
-	data.Latest = d.Data[len(d.Data)-1].Volatility
+	data.Latest30 = d.Data[len(d.Data)-1].Volatility
+	data.Latest60 = d.Data[len(d.Data)-1].Volatility60
 	if err := t.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
