@@ -2,59 +2,55 @@
 		<p>Lovingly made by</p>
 		<p><a href="https://twitter.com/elidourado" class="twitter-follow-button" data-show-count="false" data-size="large">@elidourado</a></p>
 	</footer>
-	<script>
-	  var chart = new Highcharts.StockChart({
-	      chart: {
-	          renderTo: 'highchart_div',
-			  height: 600,
-			  exporting: {
-			  	  fallbackToExportServer: false,
-				  filename: 'btcvol'
-			  }
-	      },
-		  legend: {
-			  enabled: true,			  
-		  },
-		  credits: {
-			  href: "https://btcvol.info",
-			  text: "btcvol.info"
-		  },
-	      series: [{
-			  name: "30-Day BTC/USD Volatility",
-	          data: [{{range .Data}}{{.Volatility}},
-		  {{end}}],
-		 	  pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		      pointInterval: 24*3600*1000,
-			  tooltip: {
-                  valueDecimals: 2,
-                  valueSuffix: '%'
-              }
-	      },
-		  {
-  			  name: "60-Day BTC/USD Volatility",
-			  visible: false,
-  	          data: replacezeroswithnulls([{{range .Data}}{{.Volatility60}},
-  		  {{end}}]),
-  		      // datagrouping: {enabled: false},
-  		 	  pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-  		      pointInterval: 24*3600*1000,
-  			  tooltip: {
-                    valueDecimals: 2,
-                    valueSuffix: '%'
-                }
-  	      }
-	  ]
-	  });
-	  
-	  function replacezeroswithnulls(array) {
-		  for (var i = 0; i < array.length; i++) {
-	          if (array[i] == 0) {
-	              array[i] = null;
-		  		}
-	 	   }
-		  return array;
+<script>
+var chart = new Highcharts.StockChart({
+	chart: {
+		renderTo: 'highchart_div',
+		height: 600,
+		exporting: {
+			fallbackToExportServer: false,
+			filename: 'btcvol'
 	  }
-	</script>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-  </body>
+	},
+	legend: {
+		enabled: true,			  
+	},
+	credits: {
+		href: "https://btcvol.info",
+		text: "btcvol.info"
+	},
+	series: [{
+		name: "30-Day BTC/USD Volatility",
+		data: [{{range .Data}}{{.Volatility}},{{end}}],
+		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+		pointInterval: 24*3600*1000,
+		tooltip: {
+			valueDecimals: 2,
+			valueSuffix: '%'
+	  }
+	},
+	{
+		name: "60-Day BTC/USD Volatility",
+		visible: false,
+		data: replacezeroswithnulls([{{range .Data}}{{.Volatility60}},{{end}}]),
+		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+		pointInterval: 24*3600*1000,
+		tooltip: {
+			valueDecimals: 2,
+			valueSuffix: '%'
+		}
+	}
+]
+});
+function replacezeroswithnulls(array) {
+	for (var i = 0; i < array.length; i++) {
+		if (array[i] == 0) {
+			array[i] = null;
+		}
+	}
+	return array;
+}
+</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</body>
 </html>
