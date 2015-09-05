@@ -44,7 +44,9 @@ func preprocess(c appengine.Context) {
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXTHUS", 0, nil), &thailand); err != nil {
 		panic(err)
 	}
-	renderdata.Data = stripdata(d.Data[29:])
+	bitcoindata = d.Data[29:]
+	latest = d.Data[len(d.Data)-1]
+	renderdata.Data = stripdata(bitcoindata)
 	renderdata.GOLDAMGBD228NLBM = stripdata(gold.Data[29:])
 	renderdata.DEXUSEU = stripdata(euro.Data[29:])
 	renderdata.DEXBZUS = stripdata(brazil.Data[29:])

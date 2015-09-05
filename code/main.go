@@ -27,6 +27,8 @@ var t = template.Must(template.New("content.html").ParseFiles(
 ))
 
 var renderdata RenderData
+var bitcoindata []DataPoint
+var latest DataPoint
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)

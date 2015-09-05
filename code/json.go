@@ -2,19 +2,17 @@ package btcvolatility
 
 import (
 	"appengine"
-	"appengine/datastore"
+	// "appengine/datastore"
 	"encoding/json"
 	"net/http"
 )
 
 func allHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	var d StoredDataSet
-	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "data", 0, nil), &d); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	if len(bitcoindata) == 0 {
+		preprocess(c)
 	}
-	object, err := json.Marshal(d.Data[29:])
+	object, err := json.Marshal(bitcoindata)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -24,12 +22,10 @@ func allHandler(w http.ResponseWriter, r *http.Request) {
 
 func latestHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	var d StoredDataSet
-	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "data", 0, nil), &d); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	if latest.Volatility == 0 {
+		preprocess(c)
 	}
-	object, err := json.Marshal(d.Data[len(d.Data)-1])
+	object, err := json.Marshal(latest)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
