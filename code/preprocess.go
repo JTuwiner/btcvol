@@ -17,8 +17,6 @@ type BasicDataSet []DataPoint
 var delayedpreprocess = delay.Func("preprocess", preprocess)
 
 func preprocess(c appengine.Context) {
-	c.Infof("start preprocess")
-
 	var d StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "data", 0, nil), &d); err != nil {
 		panic(err)

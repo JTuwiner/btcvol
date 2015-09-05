@@ -28,7 +28,6 @@ func urlForSeries(z string) string {
 }
 
 var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
-	c.Infof("started series update")
 
 	u := urlForSeries(z)
 	body, err := fetch(u, c)
@@ -106,7 +105,5 @@ var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
 	}
 	if _, err := datastore.Put(c, datastore.NewKey(c, "StoredDataSet", z, 0, nil), &d); err != nil {
 		panic(err)
-	} else {
-		c.Infof("dataset stored")
 	}
 })

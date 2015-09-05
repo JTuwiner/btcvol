@@ -2,7 +2,6 @@ package btcvolatility
 
 import (
 	"appengine"
-	// "appengine/datastore"
 	"fmt"
 	"net/http"
 )
