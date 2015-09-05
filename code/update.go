@@ -3,6 +3,7 @@ package btcvolatility
 import (
 	"appengine"
 	"appengine/datastore"
+	"appengine/delay"
 	"encoding/json"
 	"fmt"
 	"github.com/GaryBoone/GoStats/stats"
@@ -31,6 +32,18 @@ type StoredDataSet struct {
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
+	updateBitcoin.Call(c)
+	updateSeries.Call(c,"GOLDAMGBD228NLBM")
+	updateSeries.Call(c,"DEXUSEU")
+	updateSeries.Call(c,"DEXBZUS")
+	updateSeries.Call(c,"DEXCHUS")
+	updateSeries.Call(c,"DEXTHUS")
+	delayedpreprocess.Call(c)
+	fmt.Fprint(w, "OK")
+}
+
+
+var updateBitcoin = delay.Func("Fred", func(c appengine.Context) {
 	now := time.Now()
 	u := "https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=" + now.Format("2006-01-02")
 	body, err := fetch(u, c)
@@ -83,17 +96,9 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		Data: data,
 	}
 	if _, err := datastore.Put(c, datastore.NewKey(c, "StoredDataSet", "data", 0, nil), &d); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		panic(err)
 	}
-	updateSeries.Call(c,"GOLDAMGBD228NLBM")
-	updateSeries.Call(c,"DEXUSEU")
-	updateSeries.Call(c,"DEXBZUS")
-	updateSeries.Call(c,"DEXCHUS")
-	updateSeries.Call(c,"DEXTHUS")
-	delayedpreprocess.Call(c)
-	fmt.Fprint(w, "OK")
-}
+})
 
 // Sorting
 
