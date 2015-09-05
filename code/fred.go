@@ -29,7 +29,7 @@ func urlForSeries(z string) string {
 
 var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
 	c.Infof("started series update")
-	
+
 	u := urlForSeries(z)
 	body, err := fetch(u, c)
 	if err != nil {
@@ -39,15 +39,15 @@ var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
 	if err = json.Unmarshal(body, &response); err != nil {
 		panic(err)
 	}
-	
+
 	now := time.Now()
-	starttime, _ := time.Parse(dateformat,"2010-07-18")
-	datalist := make(map[string]float64)	
-	
+	starttime, _ := time.Parse(dateformat, "2010-07-18")
+	datalist := make(map[string]float64)
+
 	for day := starttime; day.Before(now); day = day.AddDate(0, 0, 1) {
-	 	datalist[day.Format(dateformat)] = math.NaN()
+		datalist[day.Format(dateformat)] = math.NaN()
 	}
-	
+
 	for _, obs := range response.Observations {
 		if value, err := strconv.ParseFloat(obs.Value, 64); err != nil {
 			// c.Infof("error: %v",err)
@@ -55,8 +55,7 @@ var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
 			datalist[obs.Date] = value
 		}
 	}
-	
-	
+
 	var data DataSet
 	for k, v := range datalist {
 		l := math.Log(v)
@@ -66,13 +65,13 @@ var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
 			Logprice: l,
 		}
 		data = append(data, d)
-	}	
-	
+	}
+
 	sort.Sort(DataSet(data))
-	
+
 	// ideally, we'd use multiple imputation to fill in weekends and holidays
 	// must find Go package for multiple imputation
-	
+
 	i := 1
 	for i < len(data) {
 		data[i].Return = data[i].Logprice - data[i-1].Logprice

@@ -20,10 +20,10 @@ func csvHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func zerotonull(n float64) (string) {
-	if (n==0) {
+func zerotonull(n float64) string {
+	if n == 0 {
 		return ""
 	} else {
-		return fmt.Sprintf("%v",n)
+		return fmt.Sprintf("%v", n)
 	}
 }

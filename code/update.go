@@ -33,15 +33,14 @@ type StoredDataSet struct {
 func updateHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	updateBitcoin.Call(c)
-	updateSeries.Call(c,"GOLDAMGBD228NLBM")
-	updateSeries.Call(c,"DEXUSEU")
-	updateSeries.Call(c,"DEXBZUS")
-	updateSeries.Call(c,"DEXCHUS")
-	updateSeries.Call(c,"DEXTHUS")
+	updateSeries.Call(c, "GOLDAMGBD228NLBM")
+	updateSeries.Call(c, "DEXUSEU")
+	updateSeries.Call(c, "DEXBZUS")
+	updateSeries.Call(c, "DEXCHUS")
+	updateSeries.Call(c, "DEXTHUS")
 	delayedpreprocess.Call(c)
 	fmt.Fprint(w, "OK")
 }
-
 
 var updateBitcoin = delay.Func("Fred", func(c appengine.Context) {
 	now := time.Now()
