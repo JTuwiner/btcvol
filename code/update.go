@@ -86,7 +86,11 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	updateSeries.Call(c,"GOLDAMGBD228NLBM")
+	updateSeries.Call(c,"DEXUSEU")
+	updateSeries.Call(c,"DEXBZUS")
+	updateSeries.Call(c,"DEXCHUS")
+	updateSeries.Call(c,"DEXTHUS")
 	fmt.Fprint(w, "OK")
 }
 
