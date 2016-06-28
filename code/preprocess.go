@@ -33,6 +33,10 @@ func preprocess(c appengine.Context) {
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXUSEU", 0, nil), &euro); err != nil {
 		panic(err)
 	}
+	var pound StoredDataSet
+	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXUSUK", 0, nil), &pound); err != nil {
+		panic(err)
+	}
 	var brazil StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXBZUS", 0, nil), &brazil); err != nil {
 		panic(err)
@@ -56,6 +60,7 @@ func preprocess(c appengine.Context) {
 	renderdata.Ether = stripdata(e.Data[29:])
 	renderdata.GOLDAMGBD228NLBM = stripdata(gold.Data[29:])
 	renderdata.DEXUSEU = stripdata(euro.Data[29:])
+	renderdata.DEXUSUK = stripdata(pound.Data[29:])
 	renderdata.DEXBZUS = stripdata(brazil.Data[29:])
 	renderdata.DEXCHUS = stripdata(china.Data[29:])
 	renderdata.DEXTHUS = stripdata(thailand.Data[29:])

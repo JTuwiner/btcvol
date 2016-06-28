@@ -46,6 +46,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	updateEther.Call(c)
 	updateSeries.Call(c, "GOLDAMGBD228NLBM")
 	updateSeries.Call(c, "DEXUSEU")
+	updateSeries.Call(c, "DEXUSUK")
 	updateSeries.Call(c, "DEXBZUS")
 	updateSeries.Call(c, "DEXCHUS")
 	updateSeries.Call(c, "DEXTHUS")

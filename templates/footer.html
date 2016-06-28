@@ -106,6 +106,27 @@ var chart = new Highcharts.StockChart({
 			valueSuffix: '%'
 		}
 	},{
+		name: "30-Day USD/GBP Volatility*",
+		visible: false,
+		data: [{{range .DEXUSUK}}{{.Volatility}},{{end}}],
+		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+		pointInterval: 24*3600*1000,
+		tooltip: {
+			valueDecimals: 2,
+			valueSuffix: '%'
+	  }
+	},
+	{
+		name: "60-Day USD/GBP Volatility*",
+		visible: false,
+		data: replacezeroswithnulls([{{range .DEXUSUK}}{{.Volatility60}},{{end}}]),
+		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+		pointInterval: 24*3600*1000,
+		tooltip: {
+			valueDecimals: 2,
+			valueSuffix: '%'
+		}
+	},{
 		name: "30-Day BRL/USD Volatility*",
 		visible: false,
 		data: [{{range .DEXBZUS}}{{.Volatility}},{{end}}],
