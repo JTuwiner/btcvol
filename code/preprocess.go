@@ -54,7 +54,12 @@ func preprocess(c context.Context) {
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXJPUS", 0, nil), &japan); err != nil {
 		log.Infof(c, "Fetching Japan data: %v", err)
 	}
-	_ = japan
+
+	var southafrica StoredDataSet
+	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXSFUS", 0, nil), &southafrica); err != nil {
+		log.Infof(c, "Fetching South Africa data: %v", err)
+	}
+
 	bitcoindata = d.Data[29:]
 	latest = d.Data[len(d.Data)-1]
 	renderdata.Data = stripdata(bitcoindata)
@@ -66,6 +71,7 @@ func preprocess(c context.Context) {
 	renderdata.DEXCHUS = stripdata(china.Data[29:])
 	renderdata.DEXTHUS = stripdata(thailand.Data[29:])
 	renderdata.DEXJPUS = stripdata(japan.Data[29:])
+	renderdata.DEXSFUS = stripdata(southafrica.Data[29:])
 	renderdata.Latest30 = d.Data[len(d.Data)-1].Volatility
 	renderdata.Latest60 = d.Data[len(d.Data)-1].Volatility60
 }

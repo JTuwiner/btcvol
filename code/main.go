@@ -8,8 +8,8 @@ import (
 )
 
 type RenderData struct {
-	Latest30, Latest60                                                                  float64
-	Data, Ether, GOLDAMGBD228NLBM, DEXUSEU, DEXUSUK, DEXBZUS, DEXCHUS, DEXTHUS, DEXJPUS BasicDataSet `datastore:",noindex"`
+	Latest30, Latest60                                                                           float64
+	Data, Ether, GOLDAMGBD228NLBM, DEXUSEU, DEXUSUK, DEXBZUS, DEXCHUS, DEXTHUS, DEXJPUS, DEXSFUS BasicDataSet `datastore:",noindex"`
 }
 
 func init() {

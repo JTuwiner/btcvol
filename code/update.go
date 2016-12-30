@@ -51,6 +51,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	updateSeries.Call(c, "DEXCHUS")
 	updateSeries.Call(c, "DEXTHUS")
 	updateSeries.Call(c, "DEXJPUS")
+	updateSeries.Call(c, "DEXSFUS")
 	delayedpreprocess.Call(c)
 	fmt.Fprint(w, "OK")
 }
