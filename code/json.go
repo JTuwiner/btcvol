@@ -1,9 +1,8 @@
 package btcvolatility
 
 import (
-	"appengine"
-	// "appengine/datastore"
 	"encoding/json"
+	"google.golang.org/appengine"
 	"net/http"
 )
 

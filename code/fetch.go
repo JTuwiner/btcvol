@@ -1,18 +1,16 @@
 package btcvolatility
 
 import (
-	"appengine"
-	"appengine/urlfetch"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/urlfetch"
 	"io/ioutil"
 	"net/http"
-	"time"
 )
 
-func fetch(url string, c appengine.Context) ([]byte, error) {
+func fetch(url string, c context.Context) ([]byte, error) {
 	transport := urlfetch.Transport{
-		Context:                       c,
-		Deadline:                      time.Duration(20) * time.Second,
-		AllowInvalidServerCertificate: false,
+		Context: c,
+		AllowInvalidServerCertificate: true,
 	}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -22,10 +20,16 @@ func fetch(url string, c appengine.Context) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// client := urlfetch.Client(c)
+	// resp, err := client.Get(url)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
-	resp.Body.Close()
+	defer resp.Body.Close()
 	return body, nil
 }

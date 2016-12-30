@@ -1,9 +1,10 @@
 package btcvolatility
 
 import (
-	"appengine"
-	"appengine/datastore"
-	"appengine/delay"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/delay"
+	"google.golang.org/appengine/log"
 )
 
 type BasicDataPoint struct {
@@ -16,42 +17,42 @@ type BasicDataSet []DataPoint
 
 var delayedpreprocess = delay.Func("preprocess", preprocess)
 
-func preprocess(c appengine.Context) {
+func preprocess(c context.Context) {
 	var d StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "data", 0, nil), &d); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Bitcoin data: %v", err)
 	}
 	var e StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "ether", 0, nil), &e); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Ether data: %v", err)
 	}
 	var gold StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "GOLDAMGBD228NLBM", 0, nil), &gold); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Gold data: %v", err)
 	}
 	var euro StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXUSEU", 0, nil), &euro); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Euro data: %v", err)
 	}
 	var pound StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXUSUK", 0, nil), &pound); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching GBP data: %v", err)
 	}
 	var brazil StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXBZUS", 0, nil), &brazil); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching BRL data: %v", err)
 	}
 	var china StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXCHUS", 0, nil), &china); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching China data: %v", err)
 	}
 	var thailand StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXTHUS", 0, nil), &thailand); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Thailand data: %v", err)
 	}
 	var japan StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "DEXJPUS", 0, nil), &japan); err != nil {
-		panic(err)
+		log.Infof(c, "Fetching Japan data: %v", err)
 	}
 	_ = japan
 	bitcoindata = d.Data[29:]

@@ -1,13 +1,13 @@
 package btcvolatility
 
 import (
-	"appengine"
-	"appengine/datastore"
-	"appengine/delay"
 	"encoding/json"
 	"fmt"
 	"github.com/GaryBoone/GoStats/stats"
-	// "google.golang.org/appengine/log"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/delay"
 	"math"
 	"net/http"
 	"sort"
@@ -55,9 +55,9 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "OK")
 }
 
-var updateBitcoin = delay.Func("Bitcoin", func(c appengine.Context) {
+var updateBitcoin = delay.Func("Bitcoin", func(c context.Context) {
 	now := time.Now()
-	u := "https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=" + now.Format("2006-01-02")
+	u := "http://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=" + now.Format("2006-01-02")
 	body, err := fetch(u, c)
 	if err != nil {
 		panic(err)
@@ -112,7 +112,7 @@ var updateBitcoin = delay.Func("Bitcoin", func(c appengine.Context) {
 	}
 })
 
-var updateEther = delay.Func("Ether", func(c appengine.Context) {
+var updateEther = delay.Func("Ether", func(c context.Context) {
 	u := "https://etherchain.org/api/statistics/price"
 	body, err := fetch(u, c)
 	if err != nil {

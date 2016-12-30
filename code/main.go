@@ -1,10 +1,10 @@
 package btcvolatility
 
 import (
-	"appengine"
-	// "appengine/datastore"
+	"google.golang.org/appengine"
 	"html/template"
 	"net/http"
+	"time"
 )
 
 type RenderData struct {

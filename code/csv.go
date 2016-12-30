@@ -1,8 +1,8 @@
 package btcvolatility
 
 import (
-	"appengine"
 	"fmt"
+	"google.golang.org/appengine"
 	"net/http"
 )
 

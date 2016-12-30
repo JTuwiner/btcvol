@@ -1,11 +1,11 @@
 package btcvolatility
 
 import (
-	"appengine"
-	"appengine/datastore"
-	"appengine/delay"
 	"encoding/json"
 	"github.com/GaryBoone/GoStats/stats"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/delay"
 	"math"
 	"sort"
 	"strconv"
@@ -27,7 +27,7 @@ func urlForSeries(z string) string {
 	return "https://api.stlouisfed.org/fred/series/observations?series_id=" + z + "&api_key=" + fredapikey + "&file_type=json&observation_start=2010-07-18"
 }
 
-var updateSeries = delay.Func("Fred", func(c appengine.Context, z string) {
+var updateSeries = delay.Func("Fred", func(c context.Context, z string) {
 
 	u := urlForSeries(z)
 	body, err := fetch(u, c)
