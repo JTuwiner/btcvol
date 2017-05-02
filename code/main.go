@@ -1,10 +1,11 @@
 package btcvolatility
 
 import (
-	"google.golang.org/appengine"
 	"html/template"
 	"net/http"
 	"time"
+
+	"google.golang.org/appengine"
 )
 
 type RenderData struct {
@@ -18,6 +19,17 @@ func init() {
 	http.HandleFunc("/debug", debugHandler)
 	http.HandleFunc("/debuge", debugeHandler)
 	http.HandleFunc("/all", allHandler)
+	//add start
+	http.HandleFunc("/allEther", allHandlerEther)
+	http.HandleFunc("/allGOLDAMGBD228NLBM", allHandlerGOLDAMGBD228NLBM)
+	http.HandleFunc("/allDEXUSEU", allHandlerDEXUSEU)
+	http.HandleFunc("/allDEXUSUK", allHandlerDEXUSUK)
+	http.HandleFunc("/allDEXBZUS", allHandlerDEXBZUS)
+	http.HandleFunc("/allDEXCHUS", allHandlerDEXCHUS)
+	http.HandleFunc("/allDEXTHUS", allHandlerDEXTHUS)
+	http.HandleFunc("/allDEXJPUS", allHandlerDEXJPUS)
+	http.HandleFunc("/allDEXSFUS", allHandlerDEXSFUS)
+	//add end
 	http.HandleFunc("/latest", latestHandler)
 	http.HandleFunc("/csv", csvHandler)
 }
@@ -30,6 +42,16 @@ var t = template.Must(template.New("content.html").ParseFiles(
 
 var renderdata RenderData
 var bitcoindata []DataPoint
+var bitcoinEther []DataPoint            //add
+var bitcoinGOLDAMGBD228NLBM []DataPoint //add
+var bitcoinDEXUSEU []DataPoint          //add
+var bitcoinDEXUSUK []DataPoint          //add
+var bitcoinDEXBZUS []DataPoint          //add
+var bitcoinDEXCHUS []DataPoint          //add
+var bitcoinDEXTHUS []DataPoint          //add
+var bitcoinDEXJPUS []DataPoint          //add
+var bitcoinDEXSFUS []DataPoint          //add
+
 var latest DataPoint
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
