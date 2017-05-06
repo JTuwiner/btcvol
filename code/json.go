@@ -3,6 +3,7 @@ package btcvolatility
 import (
 	"encoding/json"
 	"net/http"
+	"math"
 
 	"google.golang.org/appengine"
 )
@@ -27,6 +28,21 @@ func allHandlerEther(w http.ResponseWriter, r *http.Request) {
 	if len(bitcoinEther) == 0 {
 		preprocess(c)
 	}
+	
+	
+	i := 0
+	for i < len(bitcoinEther) {
+		if math.IsNaN(bitcoinEther[i].Volatility) {
+			bitcoinEther[i].Volatility = 0
+		}
+		
+		if math.IsNaN(bitcoinEther[i].Volatility60) {
+			bitcoinEther[i].Volatility60 = 0
+		}
+		i += 1
+	}
+
+	
 	object, err := json.Marshal(bitcoinEther)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
