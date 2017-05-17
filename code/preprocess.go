@@ -26,6 +26,10 @@ func preprocess(c context.Context) {
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "ether", 0, nil), &e); err != nil {
 		log.Infof(c, "Fetching Ether data: %v", err)
 	}
+	var l StoredDataSet
+	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "ltc", 0, nil), &l); err != nil {
+		log.Infof(c, "Fetching LTC data: %v", err)
+	}
 	var gold StoredDataSet
 	if err := datastore.Get(c, datastore.NewKey(c, "StoredDataSet", "GOLDAMGBD228NLBM", 0, nil), &gold); err != nil {
 		log.Infof(c, "Fetching Gold data: %v", err)
@@ -78,6 +82,7 @@ func preprocess(c context.Context) {
 	*/
 	bitcoindata = d.Data[29:]
 	bitcoinEther = e.Data[29:]
+	bitcoinLTC = l.Data[29:]
 	bitcoinGOLDAMGBD228NLBM = gold.Data[29:]
 	bitcoinDEXUSEU = euro.Data[29:]
 	bitcoinDEXUSUK = pound.Data[29:]
