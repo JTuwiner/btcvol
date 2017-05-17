@@ -20,6 +20,7 @@ func init() {
 	http.HandleFunc("/debuge", debugeHandler)
 	http.HandleFunc("/all", allHandler)
 	//add start
+	http.HandleFunc("/allLTC", allHandlerLTC)
 	http.HandleFunc("/allEther", allHandlerEther)
 	http.HandleFunc("/allGOLDAMGBD228NLBM", allHandlerGOLDAMGBD228NLBM)
 	http.HandleFunc("/allDEXUSEU", allHandlerDEXUSEU)
@@ -43,6 +44,7 @@ var t = template.Must(template.New("content.html").ParseFiles(
 var renderdata RenderData
 var bitcoindata []DataPoint
 var bitcoinEther []DataPoint            //add
+var bitcoinLTC []DataPoint              //add
 var bitcoinGOLDAMGBD228NLBM []DataPoint //add
 var bitcoinDEXUSEU []DataPoint          //add
 var bitcoinDEXUSUK []DataPoint          //add
@@ -67,7 +69,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func debugHandler(w http.ResponseWriter, r *http.Request) {
+func debugeHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	now := time.Now()
 	u := "http://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=" + now.Format("2006-01-02")
@@ -78,7 +80,7 @@ func debugHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(body)
 }
 
-func debugeHandler(w http.ResponseWriter, r *http.Request) {
+func debugHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := "https://etherchain.org/api/statistics/price"
 	body, err := fetch(u, c)
