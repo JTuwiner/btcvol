@@ -3,20 +3,38 @@ package btcvolatility
 import (
 	"encoding/json"
 	"fmt"
+	"math"
+	"net/http"
+	"sort"
+	"time"
+
 	"github.com/GaryBoone/GoStats/stats"
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/delay"
-	"math"
-	"net/http"
-	"sort"
-	"time"
+	//"google.golang.org/appengine/log"
 )
 
 type CoinDeskResponse struct {
 	Bpi map[string]float64
 }
+
+//add start
+type LTCResponse struct {
+	Price []LTCResponsePointArray
+}
+
+type LTCResponsePointArray struct {
+	Kind []LTCResponsePoint
+}
+
+type LTCResponsePoint struct {
+	Time time.Time
+	Usd  float64
+}
+
+//end
 
 type EtherChainResponse struct {
 	Data []EtherChainPoint
@@ -44,6 +62,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	updateBitcoin.Call(c)
 	updateEther.Call(c)
+	updateLTC.Call(c)
 	updateSeries.Call(c, "GOLDAMGBD228NLBM")
 	updateSeries.Call(c, "DEXUSEU")
 	updateSeries.Call(c, "DEXUSUK")
@@ -180,6 +199,110 @@ var updateEther = delay.Func("Ether", func(c context.Context) {
 	}
 	// log.Infof(c, "ether dataset: %v", e)
 	if _, err := datastore.Put(c, datastore.NewKey(c, "StoredDataSet", "ether", 0, nil), &e); err != nil {
+		panic(err)
+	}
+})
+
+var updateLTC = delay.Func("ltc", func(c context.Context) {
+	u := "http://www.coincap.io/history/LTC"
+	body, err := fetch(u, c)
+	if err != nil {
+		panic(err)
+	}
+	var f interface{}
+	if err = json.Unmarshal(body, &f); err != nil {
+		panic(err)
+	}
+
+	m := f.(map[string]interface{})
+	var data DataSet
+	datalist := make(map[string]float64)
+	starttime, _ := time.Parse(dateformat, "2010-07-18")
+	now := time.Now()
+
+	for day := starttime; day.Before(now); day = day.AddDate(0, 0, 1) {
+		datalist[day.Format(dateformat)] = math.NaN()
+	}
+
+	for k, v := range m {
+		if k != "price" {
+			continue
+		}
+		switch vv := v.(type) {
+		case []interface{}:
+			for _, u := range vv {
+				switch vvv := u.(type) {
+				case []interface{}:
+					var date string
+					for ii, uu := range vvv {
+						if ii == 0 {
+							datefloat := uu.(float64) / 1000
+							dateint := int64(datefloat)
+							date = time.Unix(dateint, 0).Format(dateformat)
+							date = time.Unix(dateint, -5).Format(dateformat)
+						} else {
+							if math.IsNaN(datalist[date]) {
+								datalist[date] = uu.(float64)
+							}
+						}
+					}
+				}
+			}
+		default:
+			fmt.Println(k, "is of a type I don't know how to handle")
+		}
+	}
+
+	for date, usd := range datalist {
+		l := math.Log(usd)
+		d := DataPoint{
+			Date:     date,
+			Price:    usd,
+			Logprice: l,
+		}
+		data = append(data, d)
+	}
+	sort.Sort(DataSet(data))
+
+	fixnum := 0
+	i := 1
+	for i < len(data) {
+		if math.IsNaN(data[i].Logprice) {
+			data[i].Logprice = data[i-1].Logprice
+			fixnum += 1
+		}
+
+		data[i].Return = data[i].Logprice - data[i-1].Logprice
+		//log.Infof(c, "Date: %v USD: %v LogValue: %v ReturnValue: %v", data[i].Date, data[i].Price, data[i].Logprice, data[i].Return)
+		i += 1
+	}
+	j := 29
+	for j < (len(data) + fixnum) {
+		subset := data[j-29 : j]
+		var returns []float64
+		for _, point := range subset {
+			returns = append(returns, point.Return)
+		}
+		data[j].Volatility = stats.StatsSampleStandardDeviation(returns) * 100.0
+		//log.Infof(c, "Date: %v Value: %v Length: %v", data[j].Date, data[j].Volatility, returns)
+		j += 1
+	}
+	k := 59
+	for k < (len(data) + fixnum) {
+		subset := data[k-59 : k]
+		var returns []float64
+		for _, point := range subset {
+			returns = append(returns, point.Return)
+		}
+		data[k].Volatility60 = stats.StatsSampleStandardDeviation(returns) * 100.0
+		k += 1
+	}
+
+	e := StoredDataSet{
+		Data: data,
+	}
+	// log.Infof(c, "ether dataset: %v", e)
+	if _, err := datastore.Put(c, datastore.NewKey(c, "StoredDataSet", "ltc", 0, nil), &e); err != nil {
 		panic(err)
 	}
 })
