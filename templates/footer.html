@@ -2,252 +2,252 @@
 		<p>Lovingly made by</p>
 		<p><a href="https://twitter.com/elidourado" class="twitter-follow-button" data-show-count="false" data-size="large">@elidourado</a></p>
 	</footer>
-<script>
-var chart = new Highcharts.StockChart({
-	chart: {
-		renderTo: 'highchart_div',
-		height: 600,
-		exporting: {
-			fallbackToExportServer: false,
-			filename: 'btcvol'
-	  }
-	},
-	legend: {
-		enabled: true,
-		// itemWidth: 350,
-	},
-	credits: {
-		href: "https://btcvol.info",
-		text: "btcvol.info"
-	},
-	series: [{
-		name: "30-Day BTC/USD Volatility",
-		data: [{{range .Data}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day BTC/USD Volatility",
-		visible: false,
-		data: replacezeroswithnulls([{{range .Data}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
+	<script>
+		var chart = new Highcharts.StockChart({
+			chart: {
+				renderTo: 'highchart_div',
+				height: 600,
+				exporting: {
+					fallbackToExportServer: false,
+					filename: 'btcvol'
+				}
+			},
+			legend: {
+				enabled: true,
+				// itemWidth: 350,
+			},
+			credits: {
+				href: "https://btcvol.info",
+				text: "btcvol.info"
+			},
+			series: [{
+				name: "30-Day BTC/USD Volatility",
+				data: [{{range .Data}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day BTC/USD Volatility",
+				visible: false,
+				data: replacezeroswithnulls([{{range .Data}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "30-Day ETH/USD Volatility",
+				visible: false,
+				data: replacezeroswithnulls([{{range .Ether}}{{.Volatility}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day ETH/USD Volatility",
+				visible: false,
+				data: replacezeroswithnulls([{{range .Ether}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "30-Day Gold/USD Volatility*",
+				visible: false,
+				data: [{{range .GOLDAMGBD228NLBM}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day Gold/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .GOLDAMGBD228NLBM}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day USD/EUR Volatility*",
+				visible: false,
+				data: [{{range .DEXUSEU}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day USD/EUR Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXUSEU}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day USD/GBP Volatility*",
+				visible: false,
+				data: [{{range .DEXUSUK}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day USD/GBP Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXUSUK}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day BRL/USD Volatility*",
+				visible: false,
+				data: [{{range .DEXBZUS}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day BRL/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXBZUS}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day CNY/USD Volatility*",
+				visible: false,
+				data: [{{range .DEXCHUS}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day CNY/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXCHUS}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day THB/USD Volatility*",
+				visible: false,
+				data: [{{range .DEXTHUS}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day THB/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXTHUS}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day JPY/USD Volatility*",
+				visible: false,
+				data: [{{range .DEXJPUS}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day JPY/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXJPUS}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},{
+				name: "30-Day ZAR/USD Volatility*",
+				visible: false,
+				data: [{{range .DEXSFUS}}{{.Volatility}},{{end}}],
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			},
+			{
+				name: "60-Day ZAR/USD Volatility*",
+				visible: false,
+				data: replacezeroswithnulls([{{range .DEXSFUS}}{{.Volatility60}},{{end}}]),
+				pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
+				pointInterval: 24*3600*1000,
+				tooltip: {
+					valueDecimals: 2,
+					valueSuffix: '%'
+				}
+			}],
+			yAxis: {
+				title: {
+					text: "Standard deviation of daily returns"
+				},
+				min: 0,
+				opposite: false
+			}
+		});
+		function replacezeroswithnulls(array) {
+			for (var i = 0; i < array.length; i++) {
+				if (array[i] == 0) {
+					array[i] = null;
+				}
+			}
+			return array;
 		}
-	},
-	{
-		name: "30-Day ETH/USD Volatility",
-		visible: false,
-		data: replacezeroswithnulls([{{range .Ether}}{{.Volatility}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day ETH/USD Volatility",
-		visible: false,
-		data: replacezeroswithnulls([{{range .Ether}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},
-	{
-		name: "30-Day Gold/USD Volatility*",
-		visible: false,
-		data: [{{range .GOLDAMGBD228NLBM}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day Gold/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .GOLDAMGBD228NLBM}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day USD/EUR Volatility*",
-		visible: false,
-		data: [{{range .DEXUSEU}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day USD/EUR Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXUSEU}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day USD/GBP Volatility*",
-		visible: false,
-		data: [{{range .DEXUSUK}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day USD/GBP Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXUSUK}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day BRL/USD Volatility*",
-		visible: false,
-		data: [{{range .DEXBZUS}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day BRL/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXBZUS}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day CNY/USD Volatility*",
-		visible: false,
-		data: [{{range .DEXCHUS}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day CNY/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXCHUS}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day THB/USD Volatility*",
-		visible: false,
-		data: [{{range .DEXTHUS}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day THB/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXTHUS}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day JPY/USD Volatility*",
-		visible: false,
-		data: [{{range .DEXJPUS}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day JPY/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXJPUS}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	},{
-		name: "30-Day ZAR/USD Volatility*",
-		visible: false,
-		data: [{{range .DEXSFUS}}{{.Volatility}},{{end}}],
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-	  }
-	},
-	{
-		name: "60-Day ZAR/USD Volatility*",
-		visible: false,
-		data: replacezeroswithnulls([{{range .DEXSFUS}}{{.Volatility60}},{{end}}]),
-		pointStart: Date.UTC(2010, 7, 16), // 2010-08-16 (month = 0 to 11)
-		pointInterval: 24*3600*1000,
-		tooltip: {
-			valueDecimals: 2,
-			valueSuffix: '%'
-		}
-	}],
-	yAxis: {
-		title: {
-			text: "Standard deviation of daily returns"
-		},
-		min: 0,
-		opposite: false
-	}
-});
-function replacezeroswithnulls(array) {
-	for (var i = 0; i < array.length; i++) {
-		if (array[i] == 0) {
-			array[i] = null;
-		}
-	}
-	return array;
-}
-</script>
+	</script>
 </body>
 </html>
